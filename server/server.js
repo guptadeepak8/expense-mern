@@ -1,15 +1,26 @@
-import  express  from "express";
-import mongoose from "mongoose";
-import cors from 'cors'
-const PORT=5000;
-const app =express();
+import express from "express";
+import cors from "cors";
+import bodyParser from "body-parser";
+import transactionroutes from "./routes/transRoutes.js"
+import authapi from"./routes/authapi.js"
+import connect from "./database/mongodb.js";
+import passport from "passport"
+import passportConfig from "./config/passport.js"
+import dotenv from "dotenv";
+const app = express();
+dotenv.config();
+app.use(cors());
+app.use(bodyParser.json());
+app.use(passport.initialize());
+passportConfig(passport);
+app.get("/", (req, res) => {
+  res.send("api is running");
+});
 
-mongoose.connect("mongodb+srv://deepak123:deepak21@expense-mern.zae1z2f.mongodb.net/?retryWrites=true&w=majority")
-console.log("Mongoosee connection sucessful")
+connect();
 
-app.use(cors)
-app.get("/",(req,res)=>{
-  res.send("api is running")
-})
+app.use("/transaction",transactionroutes)
+app.use("/auth",authapi)
 
-app.listen(PORT,console.log(`apis is running on http://localhost:${PORT}`))
+const PORT =process.env.PORT
+app.listen(PORT, console.log(`apis is running on http://localhost:${PORT}`));
