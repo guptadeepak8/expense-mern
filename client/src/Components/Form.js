@@ -46,7 +46,7 @@ export default function Form({ fetchTransaction ,editTransaction}) {
           Authorization: `Bearer ${token}`
         },
       });
-      const data = await res.json();
+    
       if (res.ok) {
         fetchTransaction();
       }
@@ -63,7 +63,7 @@ export default function Form({ fetchTransaction ,editTransaction}) {
           Authorization: `Bearer ${token}`
         },
       });
-      const data = await res.json();
+     
       if (res.ok) {
         fetchTransaction();
       }

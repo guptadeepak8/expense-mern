@@ -22,5 +22,5 @@ connect();
 app.use("/transaction", passport.authenticate("jwt", { session: false }),transactionroutes)
 app.use("/auth",authapi)
 
-const PORT =process.env.PORT
+const PORT = process.env.PORT || 5000;
 app.listen(PORT, console.log(`apis is running on http://localhost:${PORT}`));
