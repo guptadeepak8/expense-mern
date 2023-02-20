@@ -6,8 +6,6 @@ const connect=async()=>{
     process.env.MONGO_URL
   );
   
-  console.log("Mongoosee connection sucessful");
-  
 }
 
 export default connect;

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import "../css/index.css"
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -20,9 +21,9 @@ export default function Navbar() {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             EXPENZAR
           </Typography>
-          <Link to="/login">
-            <Button color="inherit">LOGIN </Button>
-          </Link>
+          <Button color="inherit">
+            <Link  className="btn" to="/login">LOGIN</Link>
+          </Button>
           <Button color="inherit" onClick={remove}>
             LOGOUT
           </Button>

@@ -11,6 +11,7 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { Link,useNavigate,useRegister } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 
 export default function Register() {
@@ -32,7 +33,9 @@ const navigate=useNavigate();
         'content-type':'application/json',
       }
     })
+    const {token}=await res.json()
     if(res.ok){
+      Cookies.set('token',token)
       navigate("/login")
     }
   };

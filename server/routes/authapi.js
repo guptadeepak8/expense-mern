@@ -8,7 +8,7 @@ dotenv.config();
 
 router.post("/register", async (req, res) => {
   const { email, firstName, lastName, password } = req.body;
-
+  
   const userExit = await User.findOne({ email });
   if (userExit) {
     res.status(409).json({ message: "User already exit" });
@@ -19,14 +19,20 @@ router.post("/register", async (req, res) => {
   const hash = await bcrypt.hashSync(password, salt);
   const user = await new User({ email, firstName, lastName, password: hash });
   await user.save();
-  res.json({ message: "registerd" });
+  const payload={
+    username:email,
+    _id:user._id
+   }
+
+  const token=jwt.sign(payload, process.env.JWT_SECRET)
+  res.json({ message: "registerd",token });
 });
 
 
 router.post('/login',async(req,res)=>{
 
     const {email,password}=req.body;
-
+    
     const user = await User.findOne({ email});
       
     if (!user) {
@@ -40,13 +46,13 @@ router.post('/login',async(req,res)=>{
       return
     }
      const payload={
-      usernsme:email,
+      username:email,
       _id:user._id
      }
 
     const token=jwt.sign(payload, process.env.JWT_SECRET)
     res.status(201).json({message:"sign in",token})
-
+     
 })
 
 export default router;

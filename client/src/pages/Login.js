@@ -22,7 +22,7 @@ export default function Login() {
       password: data.get("password"),
     };
 
-    const res = await fetch(`${process.env.REACT_APP_API_URL}/login`, {
+    const res = await fetch(`${process.env.REACT_APP_API_URL}/auth/login`, {
       method: "POST",
       body: JSON.stringify(form),
       headers: {
@@ -88,7 +88,7 @@ export default function Login() {
           </Button>
           <Grid container>
             <Grid item>
-              <Link to="/register">{"Don't have an account? Sign Up"}</Link>
+              <Link to="/register">{"Don't have an account? Register Here"}</Link>
             </Grid>
           </Grid>
         </Box>

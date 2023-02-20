@@ -10,12 +10,16 @@ import {  IconButton, Typography } from '@mui/material';
 import EditSharpIcon from '@mui/icons-material/EditSharp';
 import DeleteSharpIcon from '@mui/icons-material/DeleteSharp';
 import dayjs from 'dayjs';
+import Cookies from 'js-cookie';
 
 export default function BasicTable({transaction,fetchTransaction,setEdittransaction }) {
-
+  const token =Cookies.get('token')
   const removeItem=async(_id)=>{
     const res=await fetch( `${process.env.REACT_APP_API_URL}/transaction/${_id}`,{
       method:'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
     })
     if(res.ok){
       fetchTransaction();

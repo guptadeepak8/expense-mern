@@ -19,7 +19,7 @@ app.get("/", (req, res) => {
 
 connect();
 
-app.use("/transaction",transactionroutes)
+app.use("/transaction", passport.authenticate("jwt", { session: false }),transactionroutes)
 app.use("/auth",authapi)
 
 const PORT =process.env.PORT
