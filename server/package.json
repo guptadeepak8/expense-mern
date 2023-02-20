@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "node server.js",
+    "dev": "nodmon server.js",
     "build": "npm i"
   },
   "keywords": [],
