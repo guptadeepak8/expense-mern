@@ -25,8 +25,8 @@ export default function Form({ fetchTransaction ,editTransaction}) {
   useEffect(()=>{
     if(editTransaction){
       setToggle(true)
-      setForm(editTransaction)
       setCancel(true)
+      setForm(editTransaction)
     }
   },[editTransaction])
 
@@ -36,7 +36,9 @@ export default function Form({ fetchTransaction ,editTransaction}) {
   const handleSubmit = async (e) => {
 
     e.preventDefault();
-
+    setForm(InitalValue);
+    setToggle(false)
+    setCancel(false)
     if(editTransaction){
       const res = await fetch(`${process.env.REACT_APP_API_URL}/transaction/${editTransaction._id}`, {
         method: "PATCH",
@@ -48,10 +50,8 @@ export default function Form({ fetchTransaction ,editTransaction}) {
       });
     
       if (res.ok) {
+       
         fetchTransaction();
-        setForm(InitalValue);
-        setToggle(false)
-        setCancel(false)
       }
     }
     else{
