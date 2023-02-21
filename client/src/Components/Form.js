@@ -49,10 +49,10 @@ export default function Form({ fetchTransaction ,editTransaction}) {
     
       if (res.ok) {
         fetchTransaction();
+        setForm(InitalValue);
+        setToggle(false)
+        setCancel(false)
       }
-      setForm(InitalValue);
-      setToggle(false)
-      setCancel(false)
     }
     else{
       const res = await fetch(`${process.env.REACT_APP_API_URL}/transaction/`, {
