@@ -14,6 +14,7 @@ import Cookies from "js-cookie";
 export default function Login() {
   const navigate = useNavigate();
 
+  
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -22,7 +23,7 @@ export default function Login() {
       password: data.get("password"),
     };
 
-    const res = await fetch(`${process.env.REACT_APP_API_URL}/auth/login`, {
+    const res = await fetch(`${process.env.REACT_APP_API_URL}auth/login`, {
       method: "POST",
       body: JSON.stringify(form),
       headers: {
