@@ -1,7 +1,7 @@
 # expense-mern
 
-This is web use to store your all transaction 
+This is web App use to store your all transaction 
 
 ## Whaat it can do?
 
-pretty much everything post,delete & delete 
+pretty much everything post,delete & Edit 
