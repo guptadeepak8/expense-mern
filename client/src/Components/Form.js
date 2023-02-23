@@ -9,6 +9,8 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 import Cookies from "js-cookie";
 
+
+
 const InitalValue = {
   amount: 0,
   text: "",
@@ -22,13 +24,17 @@ export default function Form({ fetchTransaction ,editTransaction}) {
 
 
 
-  useEffect(()=>{
-    if(editTransaction){
+  
+
+  useEffect(() => {
+    if (editTransaction) {
+      setForm(editTransaction);
       setToggle(true)
       setCancel(true)
-      setForm(editTransaction)
+     
     }
-  },[editTransaction])
+   
+  }, [editTransaction]);
 
 
   
@@ -36,9 +42,7 @@ export default function Form({ fetchTransaction ,editTransaction}) {
   const handleSubmit = async (e) => {
 
     e.preventDefault();
-    setForm(InitalValue);
-    setToggle(false)
-    setCancel(false)
+  
     if(editTransaction){
       const res = await fetch(`${process.env.REACT_APP_API_URL}/transaction/${editTransaction._id}`, {
         method: "PATCH",
@@ -48,11 +52,15 @@ export default function Form({ fetchTransaction ,editTransaction}) {
           Authorization: `Bearer ${token}`
         },
       });
+     
     
       if (res.ok) {
-       
+        setForm(InitalValue);
+        setToggle(false)
+        setCancel(false)
         fetchTransaction();
       }
+     
     }
     else{
       const res = await fetch(`${process.env.REACT_APP_API_URL}/transaction/`, {
@@ -87,6 +95,10 @@ export default function Form({ fetchTransaction ,editTransaction}) {
     setToggle(false)
     setCancel(false)
   }
+
+  
+ 
+
 
   return (
     <Card sx={{ minWidth: 275, margin: 5 }}>

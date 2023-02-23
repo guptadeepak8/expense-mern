@@ -22,6 +22,7 @@ function Home() {
     const { data } = await res.json();
     setTransaction(data);
     setLoading(false);
+    setEdittransaction(null)
   };
 
   useEffect(() => {
