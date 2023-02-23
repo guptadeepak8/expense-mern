@@ -101,6 +101,7 @@ export default function Form({ fetchTransaction ,editTransaction}) {
 
 
   return (
+    <>
     <Card sx={{ minWidth: 275, margin: 5 }}>
       <CardContent>
         <Typography variant="h5">Add New Transaction</Typography>
@@ -109,21 +110,25 @@ export default function Form({ fetchTransaction ,editTransaction}) {
             sx={{ marginRight: 5 ,marginBottom:2}}
             size="small"
             name="amount"
+            type='number'
             id="outlined-basic"
-            label="AMOUNT"
+            label="Amount"
             variant="outlined"
             onChange={handleChange}
             value={form.amount}
+            required
           />
           <TextField
             sx={{ marginRight: 5 ,marginBottom:2}}
             size="small"
             name="text"
             id="outlined-basic"
-            label="TEXT"
+            label="Text"
+            type='text'
             variant="outlined"
             onChange={handleChange}
             value={form.text}
+            required
           />
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DesktopDatePicker
@@ -147,5 +152,6 @@ export default function Form({ fetchTransaction ,editTransaction}) {
         </form>
       </CardContent>
     </Card>
+    </>
   );
 }
