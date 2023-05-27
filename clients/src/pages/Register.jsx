@@ -15,6 +15,7 @@ import Cookies from 'js-cookie';
 
 
 export default function Register() {
+  const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
 const navigate=useNavigate();
   const handleSubmit = async(event) => {
     event.preventDefault();
@@ -26,7 +27,7 @@ const navigate=useNavigate();
       password: data.get('password'),
     };
 
-    const res= await fetch(`${process.env.REACT_APP_API_URL}/auth/register`,{
+    const res= await fetch(`${apiUrl}/auth/register`,{
       method:'POST',
       body:JSON.stringify(form),
       headers:{

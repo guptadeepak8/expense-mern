@@ -7,6 +7,8 @@ import App from "./App";
 import { createBrowserRouter } from "react-router-dom";
 import AuthCheck from "./utils/AuthCheck";
 import CheckGuest from "./utils/CheckGuest";
+import FormPage from "./pages/FormPage";
+import Graph from "./pages/Graph";
 
 export default createBrowserRouter([
   {
@@ -23,6 +25,14 @@ export default createBrowserRouter([
       {
         path: "/register",
         element: <CheckGuest><Register /></CheckGuest>,
+      },
+      {
+        path: "/form",
+        element: <AuthCheck><FormPage/></AuthCheck>,
+      },
+      {
+        path: "/graph",
+        element: <AuthCheck><Graph/></AuthCheck>,
       },
     ],
   },
