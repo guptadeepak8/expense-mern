@@ -1,100 +1,101 @@
-import * as React from "react";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
+import React,{useState} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Loading from "../Components/Loading.jsx";
 
 export default function Login() {
   const navigate = useNavigate();
   const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
- 
-  
+  const [form,setForm]=useState({
+    email:'',
+    password:''
+  })
+  const [isLoading, setIsLoading] = useState(false);
+ const handleChange=(e)=>{
+  const {name,value}=e.target
+  setForm({...form,[name]:value})
+ }
+
   const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    const form = {
-      email: data.get("email"),
-      password: data.get("password"),
-    };
+    setIsLoading(true);
+    try {
+      const res = await fetch(`${apiUrl}/auth/login`, {
+        method: "POST",
+        body: JSON.stringify(form),
+        headers: {
+          "content-type": "application/json",
+        },
+      });
+      const data = await res.json();
+      if(res.ok) {
+        Cookies.set('token',data.token)
+        navigate("/");
+        setIsLoading(false);
+      }else{
+        throw new Error(data.message);
 
-    const res = await fetch(`${apiUrl}/auth/login`, {
-      method: "POST",
-      body: JSON.stringify(form),
-      headers: {
-        "content-type": "application/json",
-      },
-    });
-    const {token}=await res.json()
-    
-    if(res.ok) {
-
-      Cookies.set('token',token)
-      navigate("/");
     }
-
-   
+     
+    } catch (error) {
+      setIsLoading(false);
+      toast.error(error.message, {
+        position: "top-center",
+        autoClose: 2000,
+        theme: "colored",
+      });
+      
+    }finally {
+      setIsLoading(false);
+    }
   }
 
+
+
+  const isFormValid = form.email.trim() !== '' && form.password.trim() !== '';
+ 
   return (
-    <Container component="main" maxWidth="xs">
-      <CssBaseline />
-      <Box
-        sx={{
-          marginTop: 8,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-        }}
-      >
-        <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
-          Sign in
-        </Typography>
-        <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-          <TextField
-            margin="normal"
-            required
-            fullWidth
+    <>
+     <ToastContainer className="max-[500px]:w-5" />
+     {isLoading && <Loading />} 
+      <div className="flex flex-col">
+         <h2 className="mx-10 my-5 text-xl text-slate-600 font-bold text-center">SignIN</h2>
+        <form  onSubmit={handleSubmit} className="flex flex-col">
+          <input 
+            className="text-slate-600 min-[850px]:mx-50 outline-none  text-xl  px-4 py-3 mx-10 my-5 shadow-lg shadow-indigo-700/50 rounded-3xl"
             id="email"
-            label="Email Address"
+            placeholder="Email Address"
             name="email"
             autoComplete="email"
+            value={form.email}
+            onChange={handleChange}
             autoFocus
           />
-          <TextField
-            margin="normal"
-            required
-            fullWidth
+          <input
+             className="text-slate-600 min-[850px]:mx-50 outline-none  text-xl  px-4 py-3 mx-10 my-5 shadow-lg shadow-indigo-700/50 rounded-3xl"
             name="password"
-            label="Password"
+            value={form.password}
+            onChange={handleChange}
             type="password"
             id="password"
+            placeholder="Password"
             autoComplete="current-password"
           />
-          <Button
+          <button
             type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
+            disabled={!isFormValid}
+            className={`mx-10 my-3 px-4  py-2  text-white  text-xl rounded-xl text-center ${
+              isFormValid
+                ? "bg-slate-600 shadow-lg shadow-neutral-500/50"
+                : "bg-gray-400 cursor-not-allowed"}`}
           >
             Sign In
-          </Button>
-          <Grid container>
-            <Grid item>
-              <Link to="/register">{"Don't have an account? Register Here"}</Link>
-            </Grid>
-          </Grid>
-        </Box>
-      </Box>
-    </Container>
+          </button>
+          <h2 className="mx-10 my-2 text-l text-slate-600 font-bold">Don't have an account?<Link to="/register" ><span className="text-indigo-500">Register Here</span></Link></h2>
+        </form>
+      </div>
+    </>
   );
 }

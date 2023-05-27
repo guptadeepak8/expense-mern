@@ -104,14 +104,14 @@ export default function FormPage() {
 
   return (
     <>
-    <div className="flex flex-col just ">
+    <div className="flex flex-col  ">
       <div className="flex 	items-center mx-10 my-5">
         <h2 className=" text-xl text-slate-600 font-bold">Add New Transaction</h2>
         <button className="ml-auto px-4  py-2  text-white  text-xl bg-slate-600 shadow-lg shadow-neutral-500/50  rounded-xl"onClick={cancelEvent}>BACK</button>
       </div>
         <form onSubmit={handleSubmit} className="flex flex-col  ">
           <input
-           className="text-slate-600 min-[850px]:mx-50   text-xl  px-4 py-3 mx-10 my-5 shadow-lg shadow-indigo-700/50 rounded-3xl"
+           className="text-slate-600 min-[850px]:mx-50  outline-none text-xl  px-4 py-3 mx-10 my-5 shadow-lg shadow-indigo-700/50 rounded-3xl"
             name="amount"
             type="text"
             placeholder="Amount"
@@ -120,7 +120,7 @@ export default function FormPage() {
             required
           />
           <input
-           className="text-slate-600  text-xl  px-4 py-3 mx-10 my-5 shadow-lg shadow-indigo-700/50 rounded-3xl"
+           className="text-slate-600  text-xl outline-none px-4 py-3 mx-10 my-5 shadow-lg shadow-indigo-700/50 rounded-3xl"
             name="text"
             label="Text"
             type='text'
@@ -133,7 +133,7 @@ export default function FormPage() {
             <input
            
             name="date"
-            className="text-slate-600  text-xl  px-4 py-3 mx-10 my-5 shadow-lg shadow-indigo-700/50 rounded-3xl"
+            className="text-slate-600  text-xl outline-none  px-4 py-3 mx-10 my-5 shadow-lg shadow-indigo-700/50 rounded-3xl"
             type="date"
            
             onChange={handleChange}

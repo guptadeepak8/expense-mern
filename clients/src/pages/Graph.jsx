@@ -1,9 +1,15 @@
 import React from 'react'
 
+import { useLocation } from "react-router-dom";
 const Graph = () => {
+  const location = useLocation();
+  const { transaction } = location.state || {};
   return (
-    <div>This is Graph</div>
-  )
+    <div>
+      <h2>Transaction Charts</h2>
+      
+    </div>
+  );
 }
 
 export default Graph

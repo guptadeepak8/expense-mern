@@ -10,9 +10,20 @@ export default function BasicTable({transaction,fetchTransaction }) {
   const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
   const navigate=useNavigate();
   const [editTransaction,setEdittransaction]=useState({})
-  
+
+   
+  const [search,setSearch]=useState("")
+
+
+  const handleChange=(e)=>{
+    setSearch(e.target.value)
+  }
+
   const token =Cookies.get('token')
+
+
   const removeItem=async(_id)=>{
+   setLoading(true)
     const res=await fetch( `${apiUrl}/transaction/${_id}`,{
       method:'DELETE',
       headers: {
@@ -22,6 +33,7 @@ export default function BasicTable({transaction,fetchTransaction }) {
     if(res.ok){
       fetchTransaction();
     }
+    setLoading(false)
   }
 
   function formatdate(date){
@@ -37,7 +49,13 @@ export default function BasicTable({transaction,fetchTransaction }) {
   return (
     <>
     <div className=' '>
-      {transaction.map(({_id,amount,text,date})=>{
+      <input type="search" placeholder='Search' value={search} onChange={handleChange} className='bg-white font-bold  min-w-[20%] text-slate-600  text-xl outline-none px-3 py-3 mx-3 my-2 shadow-lg shadow-indigo-700/50 rounded-3xl hover:bg-violet-300 hover:text-white max-[460px]:min-w-[44%] '/>
+     
+       
+     { transaction.length === 0?<h2 className=" text-xl text-slate-600  mx-3 my-2 font-bold">No Transactions</h2>:
+      (transaction.filter((items)=>{
+        return search.toLowerCase()===''?items : items.text.toLowerCase().includes(search)
+      }).map(({_id,amount,text,date})=>{
           return (
             <div key={_id} className=" flex my-5 justify-around py-4 px-1 max-[2000px]:mx-20 max-[480px]:mx-3 bg-slate-100 shadow-lg shadow-neutral-500/50  rounded-xl items-center">
               <span >{text}</span>
@@ -51,7 +69,7 @@ export default function BasicTable({transaction,fetchTransaction }) {
                 </IconButton>
             </div>
           )
-      })}
+      }))}
       
     </div>
     </>

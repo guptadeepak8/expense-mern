@@ -37,13 +37,13 @@ router.post('/login',async(req,res)=>{
       
     if (!user) {
       res.status(409).json({ message: "User doesnt exit" });
-      return
+      return 
     }
       
     const hashPassword =await bcrypt.compare(password, user.password);
     if (!hashPassword) {
-      res.status(409).json({ message: "User pasword is wrong" });
-      return
+      res.status(404).json({ message: "User password is wrong" });
+      return 
     }
      const payload={
       username:email,
