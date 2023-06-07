@@ -33,7 +33,7 @@ const [isLoading, setIsLoading] = useState(false);
       const data=await res.json()
       if(res.ok){
         Cookies.set('token',data.token)
-        navigate("/login")
+        navigate("/")
         setIsLoading(false);
       }else{
         throw new Error(data.message);
@@ -113,7 +113,7 @@ const [isLoading, setIsLoading] = useState(false);
           >
             Register
           </button>
-          <h2 className="mx-10 my-2 text-l text-slate-600 font-bold">Already have an account?<Link to="/register" ><span className="text-indigo-500">Sign in</span></Link></h2>
+          <h2 className="mx-10 my-2 text-l text-slate-600 font-bold">Already have an account?<Link to="/login" ><span className="text-indigo-500">Sign in</span></Link></h2>
         </form>
       </div>
      

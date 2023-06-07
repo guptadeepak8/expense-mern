@@ -1,20 +1,19 @@
 import { useEffect, useState } from "react";
-import Card from "@mui/material/Card";
-import { Button } from "@mui/material";
-import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
-import { TextField } from "@mui/material"
 import { useLocation,useNavigate } from 'react-router-dom';
 import Cookies from "js-cookie";
+import { useSelector } from "react-redux";
+
+
+const today = new Date().toISOString().slice(0, 10);
+const InitalValue = {
+  amount: '',
+  text: "",
+  category:"",
+  date:today
+};
 
 export default function FormPage() {
-
-  const today = new Date().toISOString().slice(0, 10);
-  const InitalValue = {
-    amount: '',
-    text: "",
-    date:today
-  };
+  const {categories}=useSelector((state)=>state.auth.user)
 
   const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
   const token =Cookies.get('token')
@@ -129,9 +128,27 @@ export default function FormPage() {
             value={form.text}
             required
           />
-              
-            <input
+        <select 
+        className="text-slate-600  text-xl outline-none px-4 py-3 mx-10 my-5 shadow-lg shadow-indigo-700/50 rounded-3xl w-60"
+        value={form.category}
+        onChange={handleChange} 
+        name="category">
+          <option value="" disabled defaultValue="" >
+         Select a category
+           </option>
+
+          {categories.map(({label},index)=>{
+            return(
+              <option
+              key={index} 
+             className="text-gray-900 bg-gray-200 text-xl outline-none px-4 py-3 mx-10 my-5 shadow-lg rounded-3xl"
+              value={label}>
+                {label}
+          </option>
+          )})}
            
+        </select>
+           <input
             name="date"
             className="text-slate-600  text-xl outline-none  px-4 py-3 mx-10 my-5 shadow-lg shadow-indigo-700/50 rounded-3xl"
             type="date"
@@ -140,13 +157,13 @@ export default function FormPage() {
             value={form.date ? form.date.slice(0, 10) : ''}
             required
           />
+
            <div className="mx-10">    
           <button   className="mr-auto mx-2 px-4  py-2  text-white  text-xl bg-slate-600 shadow-lg shadow-neutral-500/50  rounded-xl">{toggle?`UPDATE`:"SUBMIT"}</button>
           </div>   
-        </form>
-          
-     
+        </form>   
     </div>
+
     </>
   );
 }

@@ -4,8 +4,11 @@ import Cookies from "js-cookie";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Loading from "../Components/Loading.jsx";
+import { getUser } from "../store/Reduce.js";
+import { useDispatch } from "react-redux";
 
 export default function Login() {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
   const [form,setForm]=useState({
@@ -32,11 +35,12 @@ export default function Login() {
       const data = await res.json();
       if(res.ok) {
         Cookies.set('token',data.token)
+        dispatch(getUser(data.user))
         navigate("/");
         setIsLoading(false);
       }else{
         throw new Error(data.message);
-
+        
     }
      
     } catch (error) {

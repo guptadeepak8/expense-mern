@@ -19,7 +19,10 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-  },
+    categories: [
+      {label:String,icon:String}
+    ]
+    },
   {
     timestamps: true,
   }
