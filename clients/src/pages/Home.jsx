@@ -48,8 +48,8 @@ function Home() {
        <div className="flex items-center justify-center">
        <MagnifyingGlass
          visible={true}
-         height="80"
-         width="80"
+         height="130"
+         width="130"
          ariaLabel="MagnifyingGlass-loading"
          wrapperStyle={{}}
          wrapperClass="MagnifyingGlass-wrapper"
