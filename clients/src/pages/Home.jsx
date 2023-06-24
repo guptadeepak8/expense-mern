@@ -43,6 +43,7 @@ function Home() {
           Charts
         </Link>
       </div>
+      
       {loading ? (
        <div className="flex items-center justify-center">
        <MagnifyingGlass
