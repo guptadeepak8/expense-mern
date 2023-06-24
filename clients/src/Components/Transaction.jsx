@@ -11,6 +11,8 @@ const Transaction = ({data,updateTransaction,removeItem,}) => {
     return dayjs(date).format('DD MMMM,YYYY')
   }
 
+  
+ 
 
   return (
     <div  className=" flex my-3 justify-around py-4 px-1 max-[2000px]:mx-20 max-[480px]:mx-3 bg-slate-100 shadow-lg shadow-neutral-500/50  rounded-xl items-center">

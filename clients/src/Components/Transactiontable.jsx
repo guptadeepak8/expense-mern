@@ -4,11 +4,11 @@ import React,{useEffect, useState} from 'react';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import Transaction from './Transaction';
+import dayjs from 'dayjs';
 
 export default function BasicTable({transaction,fetchTransaction }) {
   const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
   const navigate=useNavigate();
-  const [editTransaction,setEdittransaction]=useState({})
   const [loading,setLoading]=useState(false)
   const token =Cookies.get('token')
 
@@ -29,12 +29,9 @@ export default function BasicTable({transaction,fetchTransaction }) {
 
  
   function updateTransaction(_id,amount,text,date){
-    setEdittransaction({_id,amount,text,date})
     navigate('/form',{state:{_id,amount,text,date}})
 
   }
-
-
 
   return (
     <>
