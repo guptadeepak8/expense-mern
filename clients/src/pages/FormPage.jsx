@@ -16,7 +16,6 @@ export default function FormPage() {
   const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
   const token =Cookies.get('token')
   const [form, setForm] = useState(InitalValue);
-  const [newdate,setNewDate]=useState('')
   const [toggle,setToggle]=useState(false);
   const [cancel,setCancel]=useState(false);
   const navigate=useNavigate();
