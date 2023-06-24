@@ -8,12 +8,10 @@ const today = new Date().toISOString().slice(0, 10);
 const InitalValue = {
   amount: '',
   text: "",
-  category:"",
   date:today
 };
 
 export default function FormPage() {
-  const {categories}=useSelector((state)=>state.auth.user)
 
   const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
   const token =Cookies.get('token')
@@ -128,26 +126,6 @@ export default function FormPage() {
             value={form.text}
             required
           />
-        <select 
-        className="text-slate-600  text-xl outline-none px-4 py-3 mx-10 my-5 shadow-lg shadow-indigo-700/50 rounded-3xl w-60"
-        value={form.category}
-        onChange={handleChange} 
-        name="category">
-          <option value="" disabled defaultValue="" >
-         Select a category
-           </option>
-
-          {categories.map(({label},index)=>{
-            return(
-              <option
-              key={index} 
-             className="text-gray-900 bg-gray-200 text-xl outline-none px-4 py-3 mx-10 my-5 shadow-lg rounded-3xl"
-              value={label}>
-                {label}
-          </option>
-          )})}
-           
-        </select>
            <input
             name="date"
             className="text-slate-600  text-xl outline-none  px-4 py-3 mx-10 my-5 shadow-lg shadow-indigo-700/50 rounded-3xl"

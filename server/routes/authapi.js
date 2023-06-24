@@ -6,12 +6,6 @@ import dotenv from "dotenv"
 const router = Router();
 dotenv.config();
 
-const categories=[
-  {label:"Travel",icon:"user"},
-  {label:"Food",icon:"user"},
-  {label:"investment",icon:"user"},
-  {label:"home",icon:"user"}
-]
 
 router.post("/register", async (req, res) => {
   const { email, firstName, lastName, password } = req.body;
@@ -24,7 +18,7 @@ router.post("/register", async (req, res) => {
   const saltRounds = 10;
   const salt = await bcrypt.genSaltSync(saltRounds);
   const hash = await bcrypt.hashSync(password, salt);
-  const user = await new User({ email, firstName, lastName, password: hash ,categories});
+  const user = await new User({ email, firstName, lastName, password: hash });
   await user.save();
   const payload={
     username:email,

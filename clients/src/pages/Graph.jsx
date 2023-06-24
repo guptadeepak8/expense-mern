@@ -2,11 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from 'recharts';
 import dayjs from 'dayjs';
 import Cookies from 'js-cookie';
-import { useLocation } from 'react-router-dom';
+
 
 const Graph = () => {
   const [monthlyExpenses, setMonthlyExpenses] = useState({});
-  const location = useLocation();
   const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
 
   useEffect(() => {
@@ -41,8 +40,6 @@ const Graph = () => {
       month,
       amount,
     }));
-
-    // Sort the data by month in ascending order
     data.sort((a, b) => dayjs(a.month, 'MMMM YYYY').valueOf() - dayjs(b.month, 'MMMM YYYY').valueOf());
 
     return data;

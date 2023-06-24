@@ -64,7 +64,7 @@ export default function Login() {
     <>
      <ToastContainer className="max-[500px]:w-5" />
      {isLoading && <Loading />} 
-      <div className="flex flex-col">
+      <div className="flex flex-col ">
          <h2 className="mx-10 my-5 text-xl text-slate-600 font-bold text-center">SignIN</h2>
         <form  onSubmit={handleSubmit} className="flex flex-col">
           <input 
