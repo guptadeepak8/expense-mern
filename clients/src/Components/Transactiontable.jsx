@@ -4,7 +4,6 @@ import React,{useEffect, useState} from 'react';
 import Cookies from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import Transaction from './Transaction';
-import dayjs from 'dayjs';
 
 export default function BasicTable({transaction,fetchTransaction }) {
   const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;

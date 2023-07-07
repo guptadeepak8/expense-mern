@@ -43,7 +43,7 @@ function App() {
   return (
     <>
       <ToastContainer/>
-      <Navbar Cookies={Cookies}/>
+      <Navbar />
       <Outlet />
      
     </>

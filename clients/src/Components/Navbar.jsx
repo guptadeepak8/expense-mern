@@ -4,17 +4,18 @@ import Button from "@mui/material/Button";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logout } from "../store/Reduce.js";
+import Cookies from "js-cookie";
 
-export default function Navbar({Cookies}) {
+export default function Navbar() {
   const dispatch=useDispatch();
   const navigate = useNavigate();
-const token=Cookies.get('token')
+  const token=Cookies.get('token')
 
 const [toggle,setToggle]=useState()
 
   function remove() {
-    Cookies.remove("token");
     dispatch(logout())
+    Cookies.remove('token')
     setToggle(null)
     navigate("/login");
   }
