@@ -8,41 +8,34 @@ import {
   Tooltip,
   Legend,
 } from "recharts";
-import dayjs from "dayjs";
-import Cookies from "js-cookie";
+import dayjs from "dayjs"
+import { useGetTransactionsQuery } from "../store/transaction/transactionApi";
 
 const Graph = () => {
   const [monthlyExpenses, setMonthlyExpenses] = useState({});
   const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
-
+  const {data, error, isLoading } = useGetTransactionsQuery()
+  
   useEffect(() => {
-    const fetchTransactionData = async () => {
-      const token = Cookies.get("token");
-      const res = await fetch(`${apiUrl}/transaction`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const { data } = await res.json();
-      const monthlyData = {};
-      if (res.ok) {
-        data.forEach((item) => {
+    if (data) {
+      const fetchTransactionData = () => {
+        let monthlyData = {};
+        data.transaction.forEach((item) => {
           const month = dayjs(item.date).format("MMMM YYYY");
-          //to add the all the amount of that paticular month
           if (monthlyData[month]) {
             monthlyData[month] += item.amount;
           } else {
-            //if month doesnt exits createa a new
             monthlyData[month] = item.amount;
           }
         });
         setMonthlyExpenses(monthlyData);
-      }
-    };
+      };
 
-    fetchTransactionData();
-  }, []);
+      fetchTransactionData();
+    }
+  }, [data]);
 
+  
   const generateChartData = () => {
     const data = Object.entries(monthlyExpenses).map(([month, amount]) => ({
       month,
@@ -58,23 +51,29 @@ const Graph = () => {
 
     return lastThreeMonthsData;
   };
-
+ 
   return (
     <div className="w-full h-auto flex justify-center items-center my-10">
-      <div className="max-w-screen-lg mx-auto">
-        <BarChart
-          width={window.innerWidth > 640 ? 600 : 350}
-          height={window.innerWidth > 640 ? 300 : 200}
-          data={generateChartData()}
-        >
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="month" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="amount" fill="#8884d8" />
-        </BarChart>
-      </div>
+    {isLoading ? (
+        <h3>Loading...</h3>
+      ) : error ? (
+        <div>Error: {error.message}</div>
+      ) : (
+        <div className="max-w-screen-lg mx-auto">
+          <BarChart
+            width={window.innerWidth > 640 ? 600 : 350}
+            height={window.innerWidth > 640 ? 300 : 200}
+            data={generateChartData()}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="month" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Bar dataKey="amount" fill="#8884d8" />
+          </BarChart>
+        </div>
+      )}
     </div>
   );
 };

@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { useLocation,useNavigate } from 'react-router-dom';
-import Cookies from "js-cookie";
-import { useSelector } from "react-redux";
+import { useAddTransactionMutation, useUpdateTransactionMutation } from "../store/transaction/transactionApi";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const today = new Date().toISOString().slice(0, 10);
+
 const InitalValue = {
   amount: '',
   text: "",
@@ -13,8 +15,6 @@ const InitalValue = {
 
 export default function FormPage() {
 
-  const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
-  const token =Cookies.get('token')
   const [form, setForm] = useState(InitalValue);
   const [toggle,setToggle]=useState(false);
   const [cancel,setCancel]=useState(false);
@@ -22,6 +22,8 @@ export default function FormPage() {
   const location = useLocation();
   const { _id,amount,text,date } = location.state || {};
 
+  const [addTransaction] = useAddTransactionMutation();
+  const [updateTransaction] = useUpdateTransactionMutation();
   
 
   useEffect(() => {
@@ -34,49 +36,61 @@ export default function FormPage() {
    
   }, [_id]);
 
-
-  
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = async(e) => {
 
     e.preventDefault();
-  
-    if(_id){
-      const res = await fetch(`${apiUrl}/transaction/${_id}`, {
-        method: "PATCH",
-        body: JSON.stringify(form),
-        headers: {
-          "content-type": "application/json",
-          Authorization: `Bearer ${token}`
-        },
-      });
      
-    
-      if (res.ok) {
-        setForm(InitalValue);
-        setToggle(false)
-        setCancel(false)
-        navigate('/')
+    if(_id){
+      try {
+       const {data}=await updateTransaction({_id,...form})
+       console.log(data);
+       if(data){
+        toast.success(data.message, {
+          position: "top-center",
+          autoClose: 2000,
+          theme: "colored",
+        });
+         setForm(InitalValue);
+         setToggle(false)
+         setCancel(false)
+         navigate('/')
+
+       }else{
+        throw new Error;
+       }
+
       }
+        
+      catch (error) {
+        console.log(error)
+      }
+      
+      
      
     }
     else{
-      const res = await fetch(`${apiUrl}/transaction/`, {
-        method: "POST",
-        body: JSON.stringify(form),
-        headers: {
-          "content-type": "application/json",
-          Authorization: `Bearer ${token}`
-        },
-      });
-     
-      if (res.ok) {
-        navigate('/')
+       
+      
 
+      try {
+        const { data } = await addTransaction(form);
+        if (data) {
+          toast.success(data.message, {
+            position: "top-center",
+            autoClose: 2000,
+            theme: "colored",
+          });
+          setForm(InitalValue);
+          setToggle(false);
+          setCancel(false);
+          navigate("/");
+        }
+      } catch (error) {
+        console.error("Add Transaction Error:", error);
       }
-      setForm(InitalValue);
+
     }
-   
+  
    
   };
 

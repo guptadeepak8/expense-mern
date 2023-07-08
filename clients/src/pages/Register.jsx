@@ -33,7 +33,6 @@ const [isLoading, setIsLoading] = useState(false);
       const data=await res.json()
       if(res.ok){
         Cookies.set('token',data.token)
-        navigate("/")
         setIsLoading(false);
       }else{
         throw new Error(data.message);
