@@ -3,11 +3,7 @@ import TransactionTable from "../Components/Transactiontable.jsx";
 import { Link } from "react-router-dom";
 
 function Home() {
-  //     const { data } = await res.json();
-  //     data.sort((a, b) => {
-  //       const dateA = dayjs(a.date, 'MMMM YYYY').valueOf();
-  //       const dateB = dayjs(b.date, 'MMMM YYYY').valueOf();
-  //       return dateB - dateA;
+  
   return (
     <div className="">
       <div className="flex flex-wrap justify-center ">
