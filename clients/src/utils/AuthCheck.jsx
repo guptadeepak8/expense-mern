@@ -1,11 +1,12 @@
 
 import { Navigate} from "react-router-dom";
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
+import Cookies from "js-cookie";
+import { getUsers } from "../store/auth/authSlice";
 
 
 export default function AuthCheck({children}) {
-  const auth = useSelector((state) => state.auth);
-  return auth.isAuth?children:<Navigate to='/login'/>
+  const token=Cookies.get('token')
+  const user = useSelector(getUsers);
+  return user?children:<Navigate to='/login'/>
 }
-
- 

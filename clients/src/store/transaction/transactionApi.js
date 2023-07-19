@@ -9,6 +9,7 @@ const transactionApi = createApi({
   baseQuery: fetchBaseQuery({ 
     baseUrl: apiUrl,
     prepareHeaders: (headers) => {
+      const token = Cookies.get('token');
       if (token) {
         headers.set('Authorization', `Bearer ${token}`);
       }

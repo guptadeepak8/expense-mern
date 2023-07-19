@@ -1,11 +1,12 @@
 import React from 'react'
-import Cookies from "js-cookie";
 import { Navigate } from "react-router-dom";
 import { useSelector } from 'react-redux';
+import {  getUsers } from '../store/auth/authSlice';
+import Cookies from 'js-cookie';
 export default function CheckGuest({children}) {
-  const token = Cookies.get("token");
-  const auth = useSelector((state) => state.auth);
-  return !auth.isAuth ? children : <Navigate to="/" replace={true} />
+  const token=Cookies.get('token')
+  const auth = useSelector(getUsers);
+  return auth ? <Navigate to="/" replace={true}/> :children
 }
 
  

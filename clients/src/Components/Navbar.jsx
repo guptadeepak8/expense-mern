@@ -1,27 +1,20 @@
 import {useState,useEffect} from "react"
 import "../css/index.css"
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { logout } from "../store/Reduce.js";
+import { Link } from "react-router-dom";
+import {  useDispatch, useSelector } from "react-redux";
+import {  getUsers, signOutAsync } from "../store/auth/authSlice";
 import Cookies from "js-cookie";
+import { resetTransactions } from "../store/transaction/transactionSlice";
 
 export default function Navbar() {
   const dispatch=useDispatch();
-  const navigate = useNavigate();
-  const token=Cookies.get('token')
-
-const [toggle,setToggle]=useState()
+  const user=useSelector(getUsers)
 
   function remove() {
-    dispatch(logout())
     Cookies.remove('token')
-    setToggle(null)
-    navigate("/login");
+    dispatch(signOutAsync());
+    dispatch(resetTransactions());
   }
-
-  useEffect(()=>{
-    setToggle(token)
-  },[token])
 
   return (
 <>
@@ -32,7 +25,7 @@ const [toggle,setToggle]=useState()
             <Link to="/">EXPENZAR</Link>
           </h1>
           <div>
-            {toggle ? (
+            {user ? (
               <button 
                 className="text-red-500 font-medium hover:text-red-400"
                 onClick={remove}

@@ -1,9 +1,14 @@
 
+import { useSelector } from "react-redux";
 import TransactionTable from "../Components/Transactiontable.jsx";
 import { Link } from "react-router-dom";
 
+
+
 function Home() {
-  
+ 
+
+
   return (
     <div className="">
       <div className="flex flex-wrap justify-center ">
@@ -20,7 +25,7 @@ function Home() {
           Charts
         </Link>
       </div>
-        <TransactionTable/>
+       <TransactionTable/>
     </div>
   );
 }

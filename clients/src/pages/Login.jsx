@@ -4,14 +4,14 @@ import Cookies from "js-cookie";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Loading from "../Components/Loading.jsx";
-import { getUser } from "../store/Reduce.js";
+
 import { useDispatch } from "react-redux";
+import {  loginUserAsync } from "../store/auth/authSlice.js";
 
 export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const apiUrl = import.meta.env.VITE_REACT_APP_API_URL;
-
   const [form,setForm]=useState({
     email:'',
     password:''
@@ -22,28 +22,19 @@ export default function Login() {
   setForm({...form,[name]:value})
  }
 
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setIsLoading(true);
     try {
-      const res = await fetch(`${apiUrl}/auth/login`, {
-        method: "POST",
-        body: JSON.stringify(form),
-        headers: {
-          "content-type": "application/json",
-        },
-      });
-      const data = await res.json();
-      if(res.ok) {
-        Cookies.set('token',data.token)
-        dispatch(getUser(data.user))
-        navigate("/");
-        setIsLoading(false);
-      }else{
-        throw new Error(data.message);
-        
-    }
-     
+      const res = await dispatch(loginUserAsync(form));
+      if(res){
+        Cookies.set('token', res.payload.token);
+        navigate('/');
+      }
+     else{
+      throw new Error
+     }
     } catch (error) {
       setIsLoading(false);
       toast.error(error.message, {

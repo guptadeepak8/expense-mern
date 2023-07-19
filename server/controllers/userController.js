@@ -52,4 +52,9 @@ const userLogin= async (req, res) => {
    
 }
 
-export { registerUser, userLogin } ;
+const userLogout = async (req, res) => {
+  res
+    .cookie('jwt', null).sendStatus(200)
+};
+
+export { registerUser, userLogin,userLogout } ;
