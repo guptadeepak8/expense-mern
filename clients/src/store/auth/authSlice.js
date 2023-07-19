@@ -1,6 +1,6 @@
   import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
   import Cookies from 'js-cookie';
-import {fetchUser, loginUser, signOut} from './authApi';
+import {fetchUser, loginUser, newUser, signOut} from './authApi';
 
 
   const initialState={
@@ -15,6 +15,7 @@ import {fetchUser, loginUser, signOut} from './authApi';
       return response.data
     }
   )
+  
   export const fetchUserAsync = createAsyncThunk('users/fetchUser', async () => {
     const token = Cookies.get('token');
     if (token) {
@@ -22,6 +23,16 @@ import {fetchUser, loginUser, signOut} from './authApi';
       return response.data;
     }
     return null;
+  });
+
+  export const newUserAsync = createAsyncThunk('users/newUser', async (form) => {
+    try {
+        const response = await newUser(form)
+        return response.data
+      
+    } catch (error) {
+      console.log(error);
+    }
   });
 
   export const signOutAsync = createAsyncThunk(
@@ -39,17 +50,30 @@ import {fetchUser, loginUser, signOut} from './authApi';
     reducers: {},
     extraReducers:(builder)=>{
       builder
+      //for login
       .addCase(loginUserAsync.pending, (state) => {
         state.status = 'loading';
       })
       .addCase(loginUserAsync.fulfilled, (state, {payload}) => {
         state.status = 'fulfilled';
         state.user = payload.user;
-        state.isAuth = true;
+
       })
       .addCase(loginUserAsync.rejected, (state, action) => {
         state.status = 'rejected'
       })
+      //for register of new user
+      .addCase(newUserAsync.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(newUserAsync.fulfilled, (state, {payload}) => {
+        state.status = 'fulfilled';
+        state.user = payload.newUser;
+      })
+      .addCase(newUserAsync.rejected, (state, action) => {
+        state.status = 'rejected'
+      })
+      //for fetching users
       .addCase(fetchUserAsync.pending, (state) => {
         state.status = 'loading';
       })
@@ -60,6 +84,7 @@ import {fetchUser, loginUser, signOut} from './authApi';
       .addCase(fetchUserAsync.rejected, (state) => {
         state.status = 'rejected';
       })
+      //for signout
       .addCase(signOutAsync.pending, (state) => {
         state.status = 'loading';
       })

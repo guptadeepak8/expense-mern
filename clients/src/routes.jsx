@@ -19,14 +19,6 @@ export default createBrowserRouter([
         element: <AuthCheck><Home/></AuthCheck>
       },
       {
-        path: "/login",
-        element: <CheckGuest><Login /></CheckGuest>,
-      },
-      {
-        path: "/register",
-        element: <CheckGuest><Register /></CheckGuest>,
-      },
-      {
         path: "/form",
         element: <AuthCheck><FormPage/></AuthCheck>,
       },
@@ -36,4 +28,13 @@ export default createBrowserRouter([
       },
     ],
   },
+  {
+    path: "/register",
+    element: <CheckGuest><Register /></CheckGuest>,
+  },
+  {
+    path: "/login",
+    element: <CheckGuest><Login /></CheckGuest>,
+  }
+  
 ]);

@@ -1,11 +1,11 @@
 import Transaction from "../models/Transaction.js";
 import dayjs from 'dayjs';
 const getTransaction = async (req, res) => {
-  const transaction = await Transaction.find({ user_id: req.user._id })
+  const transaction = await Transaction.find({ user_id: req.user._id }).maxTimeMS(30000);
   transaction.sort(
     (a, b) => {
-      const dateA = dayjs(a.date, "MMMM YYYY").valueOf();
-      const dateB = dayjs(b.date, "MMMM YYYY").valueOf();
+      const dateA = dayjs(a.date).valueOf();
+      const dateB = dayjs(b.date).valueOf();
       return dateB - dateA;
     }
   );
@@ -21,7 +21,7 @@ const updateTransaction = async (req, res) => {
 };
 
 const deleteTransaction = async (req, res) => {
-  await Transaction.findOneAndDelete({ _id: req.params.id });
+  await Transaction.findOneAndDelete({ _id: req.params.id }).maxTimeMS(30000);;
   res.send({ message: "Delete Successfully" });
 };
 

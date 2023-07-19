@@ -22,7 +22,7 @@ const registerUser= async (req, res) => {
    }
 
   const token=jwt.sign(payload, process.env.JWT_SECRET)
-  res.json({ message: "registerd",token });
+  res.json({ message: "registerd",token ,newUser});
 };
 
 

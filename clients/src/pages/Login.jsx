@@ -54,13 +54,16 @@ export default function Login() {
  
   return (
     <>
-     <ToastContainer className="max-[500px]:w-5" />
+
      {isLoading && <Loading />} 
-      <div className="flex flex-col ">
+      <div className="flex flex-col justify-center items-center min-h-screen ">
+        <div className=" bg-zinc-100 rounded-xl">
+         <div className="py-6 px-5">
+       
          <h2 className="mx-10 my-5 text-xl text-slate-600 font-bold text-center">SignIN</h2>
         <form  onSubmit={handleSubmit} className="flex flex-col">
           <input 
-            className="text-slate-600 min-[850px]:mx-50 outline-none  text-xl  px-4 py-3 mx-10 my-5 shadow-lg shadow-indigo-700/50 rounded-3xl"
+            className="text-slate-600  bg-slate-200  min-[850px]:mx-50 outline-none  text-xl  px-4 py-3 mx-3 my-3 shadow-lg shadow-indigo-700/50 rounded-3xl"
             id="email"
             placeholder="Email Address"
             name="email"
@@ -70,7 +73,7 @@ export default function Login() {
             autoFocus
           />
           <input
-             className="text-slate-600 min-[850px]:mx-50 outline-none  text-xl  px-4 py-3 mx-10 my-5 shadow-lg shadow-indigo-700/50 rounded-3xl"
+             className="text-slate-600 bg-slate-200 min-[850px]:mx-50 outline-none  text-xl  px-4 py-3 mx-3 my-3 shadow-lg shadow-indigo-700/50 rounded-3xl"
             name="password"
             value={form.password}
             onChange={handleChange}
@@ -91,6 +94,8 @@ export default function Login() {
           </button>
           <h2 className="mx-10 my-2 text-l text-slate-600 font-bold">Don't have an account?<Link to="/register" ><span className="text-indigo-500">Register Here</span></Link></h2>
         </form>
+         </div>
+        </div>
       </div>
     </>
   );
