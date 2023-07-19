@@ -56,7 +56,7 @@ export default function Login() {
     <>
 
      {isLoading && <Loading />} 
-      <div className="flex flex-col justify-center items-center min-h-screen ">
+      <div className="flex flex-col mt-12 items-center min-h-screen ">
         <div className=" bg-zinc-100 rounded-xl">
          <div className="py-6 px-5">
        

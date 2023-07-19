@@ -26,15 +26,16 @@ export default createBrowserRouter([
         path: "/graph",
         element: <AuthCheck><Graph/></AuthCheck>,
       },
+      {
+        path: "/register",
+        element: <CheckGuest><Register /></CheckGuest>,
+      },
+      {
+        path: "/login",
+        element: <CheckGuest><Login /></CheckGuest>,
+      }
     ],
   },
-  {
-    path: "/register",
-    element: <CheckGuest><Register /></CheckGuest>,
-  },
-  {
-    path: "/login",
-    element: <CheckGuest><Login /></CheckGuest>,
-  }
+
   
 ]);
