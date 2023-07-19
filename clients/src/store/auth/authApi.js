@@ -28,6 +28,33 @@ export function loginUser(form){
     })
 }
 
+
+export function  newUser(form){
+
+  return new Promise(async(resolve,reject)=>{
+     try {
+       const response=await fetch(`${apiUrl}/auth/register`,{
+        method: "POST",
+        body: JSON.stringify(form),
+        headers: {
+          "content-type": "application/json",
+        }
+      })
+
+      if(response){
+        const data=await response.json()
+        resolve({data})
+      }
+      else{
+        throw new Error("Failed to fetch user data");
+      }
+     } catch (error) {
+        reject(error)
+     }
+    })
+}
+
+
 export function fetchUser(token){
 
   return new Promise(async(resolve,reject)=>{

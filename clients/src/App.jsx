@@ -14,7 +14,6 @@ function App() {
   const [loading, setLoading]=useState(true)
   const dispatch = useDispatch()
 
-  console.log(user);
   
    function fetchuser() {
     dispatch(fetchUserAsync())
