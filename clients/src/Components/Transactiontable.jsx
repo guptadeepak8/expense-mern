@@ -4,7 +4,6 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import Transaction from "./Transaction";
 import { useGetTransactionsQuery } from "../store/transaction/transactionApi";
-import { quotes } from "./quotes";
 export default function BasicTable() {
   const { data, error, isLoading } = useGetTransactionsQuery();
   const [quote,setQuote]=useState('')
