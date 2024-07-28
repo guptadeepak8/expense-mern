@@ -6,14 +6,9 @@ import Transaction from "./Transaction";
 import { useGetTransactionsQuery } from "../store/transaction/transactionApi";
 export default function BasicTable() {
   const { data, error, isLoading } = useGetTransactionsQuery();
-  const [quote,setQuote]=useState('')
+ 
 
-  useEffect(()=>{
-    if(data && data.transaction.length === 0){
-      const randomQuote = getRandomQuote();
-      setQuote(randomQuote);
-    }
-  },[data])
+ 
 
   if (isLoading) {
     return <Skeletons />;
@@ -43,11 +38,7 @@ export default function BasicTable() {
     return <div>Error: {error.message}</div>;
   }
 
-  function getRandomQuote(){
-    const randomIndex = Math.floor(Math.random() * quotes.length);
-    return quotes[randomIndex];
-  }
-
+  
   
 
   return (
@@ -56,7 +47,6 @@ export default function BasicTable() {
         {data.transaction.length === 0 ? (
          <div className="bg-gray-100 rounded-lg p-4 mx-3 my-2 text-center">
          <h2 className="text-xl text-slate-600 font-bold">No Transactions</h2>
-         <p className="text-sm text-gray-500 mt-2">{quote}</p>
         </div>
         ) : (
           data.transaction.map((prop) => {
